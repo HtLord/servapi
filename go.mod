@@ -1,4 +1,4 @@
-module github.com/HtLord/serv-api
+module github.com/HtLord/servapi
 
 go 1.12
 
