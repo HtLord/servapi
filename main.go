@@ -10,5 +10,5 @@ import (
 func main()  {
 	http.HandleFunc("/create/keeper", servapi.CreateKeeper)
 	fmt.Println("Start serving")
-	log.Fatal(http.ListenAndServe("localhost:3001", nil))
+	log.Fatal(http.ListenAndServe(":80", nil))
 }
