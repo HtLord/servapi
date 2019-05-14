@@ -2,6 +2,7 @@ package servapi
 
 import (
 	"context"
+	"fmt"
 	"github.com/HtLord/servmodel"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -19,6 +20,7 @@ func CreateKeeper(w http.ResponseWriter, r *http.Request) {
 
 	err := r.ParseForm()
 	if ErrorHandler(w, r, err) {
+		fmt.Fprint(w, "403 form parsing")
 		return
 	}
 
@@ -27,10 +29,13 @@ func CreateKeeper(w http.ResponseWriter, r *http.Request) {
 	r.PostForm.Add("utime", current)
 
 	keeper := servmodel.KeeperWrapper(r.PostForm)
+	fmt.Println(keeper)
 	_, err = GetColl(dbName, collName).InsertOne(context.TODO(), keeper)
 	if ErrorHandler(w, r, err) {
+		fmt.Fprint(w, "503 db operation")
 		return
 	}
+	fmt.Fprint(w, "200ok")
 }
 
 func ReadOneKeeper(w http.ResponseWriter, r *http.Request) {

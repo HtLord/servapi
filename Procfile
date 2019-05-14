@@ -1,1 +1,1 @@
-web: bin/mongoserv
+web: bin/servapi

@@ -21,15 +21,15 @@ func LoadDefaultDbAndColl() {
 	GetColl("test2", "keeper")
 }
 
-func getClient() *mongo.Client {
-	if _URI == "" {
-		panic("Can not found MONGO_SECRET in env_var.")
-		return nil
-	}
+func GetClient() *mongo.Client {
 	if _Client == nil {
-		client, err := mongo.NewClient(options.Client().ApplyURI(_URI))
+		if _URI == "" {
+			panic("Can not found MONGO_SECRET in env_var.")
+			return nil
+		}
+		client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(_URI))
 		if err != nil {
-			log.Fatal(err)
+			fmt.Println(err)
 		}
 		_Client = client
 		fmt.Println("MongoDB client is created.")
@@ -40,7 +40,7 @@ func getClient() *mongo.Client {
 }
 
 func PingDB() {
-	err := getClient().Ping(context.TODO(), nil)
+	err := GetClient().Ping(context.TODO(), nil)
 
 	if err != nil {
 		log.Fatal(err)
@@ -61,7 +61,7 @@ func GetDB(dbName string, opts ...*options.CollectionOptions) *mongo.Database {
 	if db != nil {
 		return db
 	} else {
-		db = getClient().Database(dbName)
+		db = GetClient().Database(dbName)
 		_DBPool = append(_DBPool, db)
 		return db
 	}
@@ -78,7 +78,7 @@ func GetColl(dbName string, collName string, opts ...*options.CollectionOptions)
 	if coll != nil {
 		return coll
 	} else {
-		coll = getClient().Database(dbName).Collection(collName)
+		coll = GetClient().Database(dbName).Collection(collName)
 		_CollPool = append(_CollPool, coll)
 		return coll
 	}
