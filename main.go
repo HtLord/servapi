@@ -10,15 +10,8 @@ import (
 
 func main()  {
 	r := gin.Default()
-	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "pong",
-		})
-	})
 	r.GET("/", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "pong",
-		})
+		c.HTML(http.StatusOK, "Hello", "<h1>Hello world MTFK!</h1>")
 	})
 	r.POST("/create/keeper", servapi.GinCreateTest)
 	fmt.Println("Start serving")

@@ -15,9 +15,30 @@ var dbName = "test1"
 var collName = "keeper"
 
 func GinCreateTest(ctx *gin.Context) {
-	ctx.JSON(http.StatusOK, gin.H{
-		"Hello": "world",
-	})
+	current := time.Now()
+
+	//Name       string
+	//	Acct       string
+	//	Secret     string
+	//	CreateTime time.Time
+	//	UpdateTime time.Time
+	name, ok := ctx.GetPostForm("name")
+	acct, ok := ctx.GetPostForm("acct")
+	secret, ok := ctx.GetPostForm("secret")
+	if !ok {
+		ctx.Error(nil)
+		return
+	}
+	keeper := servmodel.Keeper{name,
+		acct,
+		secret,
+		current,
+	current}
+	_, err := GetColl(dbName, collName).InsertOne(context.TODO(), keeper)
+	if err != nil{
+		ctx.Error(nil)
+		return
+	}
 }
 
 func CreateKeeper(w http.ResponseWriter, r *http.Request) {
