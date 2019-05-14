@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/HtLord/servmodel"
+	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"net/http"
@@ -12,6 +13,12 @@ import (
 
 var dbName = "test1"
 var collName = "keeper"
+
+func GinCreateTest(ctx *gin.Context) {
+	ctx.JSON(http.StatusOK, gin.H{
+		"Hello": "world",
+	})
+}
 
 func CreateKeeper(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {

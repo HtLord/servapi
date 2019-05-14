@@ -4,6 +4,7 @@ go 1.12
 
 require (
 	github.com/HtLord/servmodel v0.0.0-20190513115034-31b5cc6abcaa
+	github.com/gin-gonic/gin v1.4.0
 	github.com/golang/snappy v0.0.1 // indirect
 	github.com/stretchr/objx v0.2.0 // indirect
 	github.com/xdg/scram v0.0.0-20180814205039-7eeb5667e42c // indirect
