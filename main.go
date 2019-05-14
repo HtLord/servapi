@@ -14,6 +14,6 @@ func main()  {
 	})
 	http.HandleFunc("/create/keeper", servapi.CreateKeeper)
 	fmt.Println("Start serving")
-	fmt.Println(os.Getenv("MONGOSECRET"))
+	fmt.Println(os.Getenv("MONGO_SECRET"))
 	log.Fatal(http.ListenAndServe(":3001", nil))
 }
